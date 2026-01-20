@@ -8,7 +8,7 @@ public class CliOptionsValueOptionsTest {
 
     @Test
     void parses_output_dir_option_o() {
-        CliOptions opt = CliOptions.parse(new String[]{"-o", "out, in1.txt"});
+        CliOptions opt = CliOptions.parse(new String[]{"-o", "out", "in1.txt"});
         assertEquals(Paths.get("out"), opt.getOutputDir());
         assertEquals(1, opt.getInputFiles().size());
         assertEquals("in1.txt", opt.getInputFiles().getFirst());
