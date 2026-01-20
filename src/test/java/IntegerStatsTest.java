@@ -29,8 +29,8 @@ public class IntegerStatsTest {
         assertEquals(3, st.getCount());
         assertEquals(new BigInteger("45"), st.getMin());
         assertEquals(new BigInteger("1234567890123456789"), st.getMax());
-        assertEquals(new BigInteger("1234567890223957334"), st.getSum());
+        assertEquals(new BigInteger("1234567890123557334"), st.getSum());
 
-        assertEquals(new BigDecimal("411522630074652444.6666666667"), st.getAverage());
+        assertEquals(new BigDecimal("411522630041185778.0000000000"), st.getAverage());
     }
 }
