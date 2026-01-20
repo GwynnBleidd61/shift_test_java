@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ResultWritersTest {
+class ResultWritersTest {
 
     @TempDir
     Path tempDir;
@@ -29,19 +30,15 @@ public class ResultWritersTest {
     }
 
     @Test
-    void does_not_create_files_until_first_write() throws Exception {
+    void creates_only_needed_file_on_write() throws Exception {
         ResultWriters w = new ResultWriters(tempDir, "", false);
 
         w.write(ValueType.INTEGER, "45");
         w.close();
 
-        Path intFile = tempDir.resolve("integers.txt");
-        Path floatFile = tempDir.resolve("floats.txt");
-        Path strFile = tempDir.resolve("strings.txt");
-
-        assertTrue(Files.exists(intFile));
-        assertFalse(Files.exists(floatFile));
-        assertFalse(Files.exists(strFile));
+        assertTrue(Files.exists(tempDir.resolve("integers.txt")));
+        assertFalse(Files.exists(tempDir.resolve("floats.txt")));
+        assertFalse(Files.exists(tempDir.resolve("strings.txt")));
 
         List<String> lines = Files.readAllLines(tempDir.resolve("integers.txt"), StandardCharsets.UTF_8);
         assertEquals(List.of("45"), lines);
@@ -85,4 +82,5 @@ public class ResultWritersTest {
 
         List<String> lines = Files.readAllLines(out, StandardCharsets.UTF_8);
         assertEquals(List.of("new"), lines);
+    }
 }
